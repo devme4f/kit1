@@ -1,8 +1,8 @@
 #include <stdio.h>
 //nhap chuoi s, ktra tinh doi xung cua chuoi
 int doiXung(char *s, int dem){
-	int a = dem-1;
-	for(int i = 0; i==dem+1/2; i++){
+	int a = dem-2;
+	for(int i = 0; i<a/2; i++){
 		if(s[i] != s[a--]) return 0;
 	}
 	return 1;
