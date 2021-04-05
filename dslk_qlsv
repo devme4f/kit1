@@ -118,8 +118,8 @@ void editSV(int k, int *size){
 	}
 }
 int main(){
-	int choice, size;
-	int k;
+	int choice, size, k;
+	int count = 0;
 	menu();
 while(choice!=6){
 	printf("\n\nNHAP LUA CHON: ");
@@ -133,10 +133,12 @@ while(choice!=6){
 		}
 		break;
 		case 2:
-		printf("\tHo ten \t\t    Lop \tTuoi     DiemTB\n");
+		printf("STT    \tHo ten \t\t      Lop  \tTuoi      DiemTB\n");
 		for(svPack *i = first; i!=NULL; i=i->next){
-		printf("%20s %10s \t %d \t %.3f\n", i->hoTen, i->lop, i->tuoi, i->diemTB);
+		printf("%d ", count++);
+		printf(" %20s %10s \t %d \t  %.3f\n", i->hoTen, i->lop, i->tuoi, i->diemTB);
 		}
+		count = 0;
 		break;
 		case 3:
 		printf("\nNhap vi tri sinh vien muon chen vao: ");
