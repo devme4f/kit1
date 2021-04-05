@@ -1,0 +1,164 @@
+#include <stdio.h>
+#include<stdlib.h>
+void menu(){
+	printf("1.  Tao danh sach sinh vien\n");
+	printf("2.  Hien thi danh sach sinh vien \n");
+	printf("3.  Chen them sinh vien \n");
+	printf("4.  Xoa 1 sinh vien\n");
+	printf("5.  Chinh sua 1 sinh vien \n");
+	printf("6.  Ket Thuc! \n");
+}
+typedef struct svPack{
+	char hoTen[25];
+	char lop[10];
+	int tuoi;
+	float diemTB;
+	struct svPack* next;
+} svPack;
+svPack* first;
+svPack* last;
+svPack* createNode(){
+	svPack* sVien = (svPack*)malloc(1 * sizeof(svPack));
+	printf("Nhap ho ten: ");
+	fflush(stdin);
+	gets(sVien->hoTen);
+	printf("Nhap lop: ");
+	fflush(stdin);
+	gets(sVien->lop);
+	printf("Nhap tuoi: ");
+	scanf("%d", &sVien->tuoi);
+	fflush(stdin);
+	printf("Nhap diem TB: ");
+	scanf("%f", &sVien->diemTB);
+	sVien->next = NULL;
+	return sVien;
+}
+void addNode(){
+	svPack* pnode = createNode();
+	if(first==NULL && last==NULL){
+		first = pnode;
+		last = pnode;
+	}
+	else{
+		last->next = pnode;
+		last = pnode;
+	}
+}
+svPack* findPreNode(int k){
+	int count = 0;
+	for(svPack* i = first; i!=NULL; i=i->next){
+		if(count==k-1){
+			return i;
+			break;
+		}
+		count++;
+	}
+	return NULL;
+}
+void addNodeHead(int *size){
+	svPack* pnode = createNode();
+	pnode->next = first;
+	first = pnode;
+	(*size)++;
+}
+void addNodeLast(int *size){
+	svPack* pnode = createNode();
+	last->next = pnode;
+	last = pnode;
+	(*size)++;
+}
+void chenSV(int k, int *size){	
+	svPack* pnode = createNode();
+	int count = 0;
+	for(svPack* i = first; i!=NULL; i=i->next){
+		if(k-1==count){
+			pnode->next = i->next;
+			i->next = pnode;
+			(*size)++;
+			break;
+		}
+		count++;
+	}
+}
+void deleteSV(int k, int* size){
+	if(k==0){
+		svPack* qnode = first;
+		first = first->next;
+		free(qnode);
+		(*size)--;
+	}
+	else if(k==(*size-1)){
+		svPack* i = findPreNode(k);
+		svPack* qnode = last;
+		last = i;
+		last->next = NULL;
+		free(qnode);
+		(*size)--;
+	}
+	else{
+		svPack* i = findPreNode(k);
+		svPack* qnode = i->next;
+		i->next = i->next->next;
+		free(qnode);
+		(*size)--;
+	}
+}
+void editSV(int k, int *size){
+	deleteSV(k, size);
+	if(k==0){
+		addNodeHead(size);
+	}
+	else if(k==(*size-1)){
+		addNodeLast(size);
+	}
+	else{
+		chenSV(k, size); //em ko thể chèn đúng vị trí đã đc xóa từ trc để đúng nghĩa thay đổi mà nó
+						//cứ đưa xuống cuối, e phải lm thế nào (ngoại trừ đầu và cuối)
+						//contact: https://www.facebook.com/danhkiet.nguyen.33
+	}
+}
+int main(){
+	int choice, size;
+	int k;
+	menu();
+while(choice!=6){
+	printf("\n\nNHAP LUA CHON: ");
+	scanf("%d", &choice);
+	switch(choice){
+		case 1:
+		printf("\nNhap so luong sinh vien: ");
+		scanf("%d", &size);
+		for(int i = 0; i<size; i++){
+			addNode();
+		}
+		break;
+		case 2:
+		printf("\tHo ten \t\t    Lop \tTuoi     DiemTB\n");
+		for(svPack *i = first; i!=NULL; i=i->next){
+		printf("%20s %10s \t %d \t %.3f\n", i->hoTen, i->lop, i->tuoi, i->diemTB);
+		}
+		break;
+		case 3:
+		printf("\nNhap vi tri sinh vien muon chen vao: ");
+		scanf("%d", &k);
+		if(k==0) addNodeHead(&size);
+		else if(k==size-1) addNodeLast(&size);
+		else chenSV(k, &size);
+		break;
+		case 4:
+		printf("Nhap vi tri sinh vien muon xoa: ");
+		scanf("%d", &k);
+		deleteSV(k, &size);
+		printf("DA XOA!!");
+		break;
+		case 5:
+		printf("Nhap vi tri sinh vien can chinh sua: ");
+		scanf("%d", &k);
+		editSV(k, &size);
+		break;
+		default:
+		break;
+	}
+}
+	return 0;
+}
