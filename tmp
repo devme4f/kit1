@@ -1,0 +1,168 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef int Data;
+
+typedef struct node {
+    Data data;
+    struct node* next;
+} Node;
+
+//+) tạo phần tử x
+//+) thêm phần tử vào đầu; x
+//+) thêm phần tử vào cuối; x
+//+) thêm phần tử vào giữa danh sách;x
+//+) tìm phần tử;x
+//+) xóa một phần tử;x
+//+) xóa danh sách;x
+
+Node* first = NULL;
+Node* last = NULL;
+
+Node* createNode ()
+{
+    Node* pnode = (Node*)malloc(1*sizeof(Node));
+
+    scanf("%d",&pnode->data);
+    pnode->next == NULL;
+
+    return pnode;
+}
+
+void AddNodeAtFirst ()
+{
+    Node* pnode = createNode();
+    if (first == NULL && last == NULL)
+    {
+        first=pnode;
+        last = pnode;
+    }
+    else
+    {
+        pnode->next=first;
+        first = pnode;
+    }
+}
+
+void AddNodeAtLast (){
+    Node* pnode = createNode();
+
+    if (last== NULL && first == NULL)
+    {
+        first = pnode;
+        last = pnode;
+    }
+    else
+    {
+        last->next = pnode;
+        last = pnode;
+    }
+}
+
+void AddNodeBehind (int n)
+{
+    Node* pnode = createNode();
+    for (Node* i = first; i!=NULL ;
+    i = i->next)
+    {
+        if (i->data == n)
+        {
+            pnode->next = i->next;
+            i->next = pnode;
+        }
+    }
+}
+
+Node* FindNode (int n)
+{
+    for (Node* i = first; i!=NULL ;
+    i = i->next)
+    {
+        if (i->data == n)
+            return i;
+    }
+    return NULL;
+}
+
+Node* FindPreNode (int n)
+{
+    for (Node* i = first; i!=NULL ;
+    i = i->next)
+    {
+        if (i->next->data == n)
+        {
+            return i;
+        }
+    }
+    return NULL;
+}
+
+void DeleteNode (int n)
+{
+    Node* pnode = FindNode(n);
+    
+    if (pnode == NULL)
+    {
+        printf("khong tim thay phan tu can xoa");
+        return;
+    }
+
+    if (first == pnode)
+    {
+        first=first->next;
+        free(pnode);
+    }
+    else if (last == pnode)
+    {
+        Node* qnode = FindPreNode(n);
+        last = qnode;
+        last ->next = NULL;
+        free(pnode);
+    }
+    else
+    {
+        Node* qnode = FindPreNode(n);
+        qnode->next = pnode->next;
+        free(pnode);
+    }
+}
+
+void FreeList ()
+{
+    while (first!=NULL)
+    {
+        Node* pnode = first;
+        first = first->next;
+        free(pnode);
+    }
+}
+
+int main() {
+    AddNodeAtFirst();
+    AddNodeAtLast();
+    AddNodeAtFirst();
+    int n;
+    printf("them vao sau: ");
+    scanf("%d",&n);
+    AddNodeBehind(n);
+    AddNodeAtLast();
+    AddNodeAtLast();
+    AddNodeAtLast();
+    AddNodeAtLast();
+    for (Node* i = first; i!=NULL ;
+    i = i->next)
+    {
+        printf("%d ",i->data);
+    }
+    printf("\n");
+    printf("nhap phan tu muon xoa: ");
+    scanf("%d",&n);
+    DeleteNode(n);
+    for (Node* i = first; i!=NULL ;
+    i = i->next)
+    {
+        printf("%d ",i->data);
+    }
+    printf("\n");
+
+}
