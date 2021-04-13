@@ -1,0 +1,107 @@
+#include <stdio.h>
+#define MAX 30
+int stack[MAX];
+int top = -1;
+int isFull(){
+	if(top==MAX-1){
+		return 1;
+	}
+	return 0;
+}
+int isEmpty(){
+	if(top==-1){
+		return 1;
+	}
+	return 0;
+}
+void push(int n){
+	if(isFull()){
+		printf("Stack da day!");
+		return;
+	}
+	top++;
+	stack[top] = n;
+}
+int pop(){
+	if(isEmpty()){
+		printf("Stack rong!");
+		return 0;
+	}
+	int tmp = stack[top];
+	top--;
+	return tmp;
+}
+void inMenu(){
+	printf("1. Chuyen mot so nguyen duong sang he 2\n");
+	printf("2. Chuyen mot so nguyen duong sang he 8\n");
+	printf("3. Chuyen mot so nguyen duong sang he 16\n");
+	printf("4. Ket thuc\n");
+}
+void chuyenCoSo(int n, int k){
+	while(n!=0){
+		push(n%k);
+		n /= k;
+	}
+	return;
+}
+int nhapN(){
+	int n;
+	do{
+		printf("\nNhap n(>=0): ");
+		scanf("%d", &n);
+	} while(n<0);
+	return n;
+}
+void hex(int tmp){
+	if(tmp==10) printf("A");
+	if(tmp==11) printf("B");
+	if(tmp==12) printf("C");
+	if(tmp==13) printf("D");
+	if(tmp==14) printf("E");
+	if(tmp==15) printf("F");
+}
+void inKetQua(){
+	while(top!=-1){
+		int tmp = pop();
+		if(tmp>=10){
+			hex(tmp);
+		}
+		else{
+		printf("%d", tmp);
+		}
+	}
+}
+int main(){
+	int n, choice, k;
+	inMenu();
+	while(choice!=4){
+		printf("\nNHAP LUA CHON: ");
+		scanf("%d", &choice);
+		switch(choice){
+			case 1:
+			n = nhapN();
+			k = 2;
+			chuyenCoSo(n, k);
+			inKetQua();
+			break;
+			case 2:
+			n = nhapN();
+			k = 8;
+			chuyenCoSo(n, k);
+			inKetQua();
+			break;
+			case 3:
+			n = nhapN();
+			k = 16;
+			chuyenCoSo(n, k);
+			inKetQua();
+			break;
+			case 4:
+			choice = 4;
+			break;
+			default:
+			break;
+		}
+	}
+	return 0;
+}
