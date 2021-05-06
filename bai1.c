@@ -8,7 +8,7 @@ int main(){
 		printf("Phuong trinh vo nghiem!");
 	}
 	if(a!=0){
-		printf("X = %.03f\n", -(float)b/a);
+		printf("X = %.03f\n", -(float)b/a); //ép kiểu int thành float, giờ chưa học không biết không sao
 	}
 	return 0;
 }
