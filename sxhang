@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+int main(){
+	int a[50][50], m, n, stt[50], k = 0, stt1[50];
+	printf("Nhap hang, cot: ");
+	scanf("%d%d", &m, &n);
+
+	for(int i = 0; i<m; i++){
+		for(int j = 0; j<n; j++){
+			scanf("%d", &a[i][j]);
+			stt[k] += a[i][j];
+		}
+		k++;
+	}
+	k = 0;
+	for(int i = 0; i<m; i++){
+		for(int j = m-1; j>=0; j--){
+			if(stt[i]>stt[j]){
+				stt1[k] = i;
+				k++;
+			}
+			else{
+				stt1[k] = j;
+				k++;
+			}
+		}
+	}
+	k=0;
+	for(int i = 0; i<m; i++){
+		for(int j = 0; j<n; j++){
+			printf("%d", a[stt1[k]][j]);
+		}
+		printf("\n");
+		k++;
+	}
+	return 0;
+}
