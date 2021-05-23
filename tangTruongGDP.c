@@ -11,8 +11,8 @@ int main(){
 
 	printf("Nam      GDP");
 	while(tongGDP<=endGDP){
-		tongGDP += tongGDP*(tTruong/100);
 		printf("\n%d      %.2f", nam, tongGDP);
+		tongGDP += tongGDP*(tTruong/100);
 		nam++;
 	}
 	return 0;
