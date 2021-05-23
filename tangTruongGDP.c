@@ -10,10 +10,11 @@ int main(){
 	float endGDP = tongGDP*2;
 
 	printf("Nam      GDP");
+	printf("\n%d      %.2f", nam, tongGDP);
 	while(tongGDP<=endGDP){
-		printf("\n%d      %.2f", nam, tongGDP);
 		tongGDP += tongGDP*(tTruong/100);
 		nam++;
+		printf("\n%d      %.2f", nam, tongGDP);
 	}
 	return 0;
 }
